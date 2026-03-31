@@ -18,6 +18,8 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+
+  app.setGlobalPrefix('/api');
 }
 
 bootstrap().catch(() => {

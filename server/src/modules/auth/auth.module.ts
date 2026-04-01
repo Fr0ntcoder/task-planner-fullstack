@@ -7,7 +7,6 @@ import { AuthController } from 'src/modules/auth/auth.controller';
 import { AuthService } from 'src/modules/auth/auth.service';
 import { JwtStrategy } from 'src/modules/auth/strategies/jwt.strategy';
 import { PrismaModule } from 'src/prisma/prisma.module';
-import { PrismaService } from 'src/prisma/prisma.service';
 
 @Module({
   imports: [
@@ -18,18 +17,17 @@ import { PrismaService } from 'src/prisma/prisma.service';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => {
-        const secret = config.get<string>('JWT_SECRET');
-        const expiresIn = (config.get<string>('JWT_EXPIRES_IN') ??
-          '1d') as StringValue;
+        const secret = config.getOrThrow<string>('JWT_SECRET');
+        const expiresIn = (config.get<string>('JWT_EXPIRES_IN') ?? '1d') as StringValue;
 
         return {
-          secret: secret,
+          secret,
           signOptions: { expiresIn },
         };
       },
     }),
   ],
-  providers: [AuthService, PrismaService, JwtStrategy],
+  providers: [AuthService, JwtStrategy],
   controllers: [AuthController],
 })
 export class AuthModule {}

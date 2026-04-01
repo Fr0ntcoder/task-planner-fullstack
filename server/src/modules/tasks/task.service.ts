@@ -1,9 +1,15 @@
-import { ForbiddenException, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Prisma, Role } from '@prisma/client';
 import { CreateTaskDto } from 'src/modules/tasks/dto/create.dto';
 import { QueryTasksDto } from 'src/modules/tasks/dto/query.dto';
 import { UpdateTaskDto } from 'src/modules/tasks/dto/update.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+
+@Injectable()
 export class TaskService {
   constructor(private readonly prisma: PrismaService) {}
 

@@ -1,22 +1,11 @@
 import { Type } from 'class-transformer';
-import { IsEnum, IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
+import { IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
 
-enum SortBy {
-  createdAt = 'createdAt',
-  dueDate = 'dueDate',
-  status = 'status',
-}
+type SortBy = 'createdAt' | 'dueDate' | 'status';
 
-enum SortOrder {
-  asc = 'asc',
-  desc = 'desc',
-}
+type SortOrder = 'asc' | 'desc';
 
-enum QuickFilter {
-  active = 'active',
-  completed = 'completed',
-  overdue = 'overdue',
-}
+type QuickFilter = 'active' | 'completed' | 'overdue';
 
 export class QueryTasksDto {
   @IsOptional()
@@ -28,16 +17,13 @@ export class QueryTasksDto {
   authorId?: string;
 
   @IsOptional()
-  @IsEnum(QuickFilter)
   quickFilter?: QuickFilter;
 
   @IsOptional()
-  @IsEnum(SortBy)
-  sortBy?: SortBy = SortBy.createdAt;
+  sortBy?: SortBy;
 
   @IsOptional()
-  @IsEnum(SortOrder)
-  sortOrder?: SortOrder = SortOrder.desc;
+  sortOrder?: SortOrder;
 
   @IsOptional()
   @Type(() => Number)

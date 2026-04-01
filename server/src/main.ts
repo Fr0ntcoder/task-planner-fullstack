@@ -4,6 +4,9 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  app.setGlobalPrefix('api');
+
   await app.listen(process.env.PORT ?? 4000);
 
   app.enableCors({
@@ -18,8 +21,6 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
-
-  app.setGlobalPrefix('/api');
 }
 
 bootstrap().catch(() => {
